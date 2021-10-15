@@ -38,8 +38,7 @@ export class ProductListComponent implements OnInit {
 
   handleSearchProducts() {
 
-    const theKeyword: string = this.route.snapshot.paramMap.get('keyword') || '';
-    console.log(this.handleSearchProducts);
+    const theKeyword: string |undefined = this.route.snapshot.paramMap.get('keyword') ?? '';
 
     // now search for the products using keyword
     this.productService.searchProducts(theKeyword).subscribe(
@@ -53,7 +52,7 @@ export class ProductListComponent implements OnInit {
 
     // check if "id" parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-    console.log(hasCategoryId);
+
     if (hasCategoryId) {
       // get the "id" param string. convert string to a number using the "+" symbol
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
