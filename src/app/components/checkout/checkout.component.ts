@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { MedShoppingFormService } from 'src/app/services/med-shopping-form.service';
 
 @Component({
   selector: 'app-checkout',
@@ -10,14 +11,19 @@ export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup!: FormGroup;
 
-
-
   totalPrice: number = 0;
   totalQuantity: number = 0;
+
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+
   billingAddressStates: any;
   shippingAddressStates: any;
 
-  constructor(private formBuilder: FormBuilder) { }
+
+
+  constructor(private formBuilder: FormBuilder,
+              private medShoppingFormService: MedShoppingFormService) { }
 
   ngOnInit(): void {
 
@@ -50,8 +56,28 @@ export class CheckoutComponent implements OnInit {
         expirationYear: ['']
       })
     });
-  }
 
+    //populate credit card months
+    const startMonth: number = new Date().getMonth()+1;
+    console.log("startMonth: " + startMonth);
+
+    this.medShoppingFormService.getCreditCardMonths(startMonth).subscribe(
+      ( data: number[]) => {
+        console.log("Retrieved credit card months " + JSON.stringify(data));
+        this.creditCardMonths = data;
+      }
+    );
+ //populate credit card years
+
+  // const startYear: number = new Date().getFullYear();
+  // console.log("startYear: " + startYear);
+  this.medShoppingFormService.getCreditCardYears().subscribe(
+    ( data: number[])  => {
+      console.log("Retrieved credit card year" + JSON.stringify(data));
+      this.creditCardYears = data;
+    }
+  );
+  }
 
   copyShippingAddressToBillingAddress(event: Event) {
     const ischecked = (<HTMLInputElement>event.target).checked;
@@ -63,15 +89,42 @@ export class CheckoutComponent implements OnInit {
     }
     else {
       this.checkoutFormGroup.controls.billingAddress.reset();
-      
+
     }
 
   }
-
 
   onSubmit() {
     console.log("Handling the submit button");
     console.log(this.checkoutFormGroup.get('customer')?.value);
     console.log("The email address is " + this.checkoutFormGroup.get('customer')?.value.email);
   }
+
+  handleMonthsAndYears() {
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+
+    const currentYear: number = new Date().getFullYear();
+    const selectedYear: number = Number(creditCardFormGroup?.value.expirationYear);
+
+    //if the current year equals the selected year, then start with current month
+
+    let startMonth: number;
+
+    if (currentYear === selectedYear){
+      startMonth = new Date().getMonth() + 1;
+      }
+      else {
+        startMonth = 1;
+      }
+
+      this.medShoppingFormService.getCreditCardMonths(startMonth).subscribe(
+
+        data => {
+          console.log("Retrieved credit card months: " + JSON.stringify(data));
+          this.creditCardMonths = data;
+        }
+      );
+    }
 }
+
+

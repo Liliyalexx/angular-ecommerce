@@ -13,7 +13,7 @@
 
                   <tr *ngFor="let tempCartItem of cartItems">
                       <td>
-                          <img src="{{ tempCartItem.imageUrl }}" class="img-responsive" width="150px" />
+                          <img alt src="{{ tempCartItem.imageUrl }}" class="img-responsive" width="150px" />
                       </td>
                       <td>
                           <p>{{ tempCartItem.name }}</p>
@@ -25,8 +25,8 @@
 
                               <div class="row no-gutters">
                                   <div class="col">
-                                      <button (click)="incrementQuantity(tempCartItem)" class="btn btn-primary btn-sm">
-                                          <i class="fas fa-plus"></i>
+                                      <button id="combo1" aria-label="Aria Name" (click)="incrementQuantity(tempCartItem)" class="btn btn-primary btn-sm"  >
+                                          <i class="fa fa-plus"></i>
                                       </button>
                                   </div>
 
@@ -35,8 +35,8 @@
                                   </div>
 
                                   <div class="col">
-                                      <button (click)="decrementQuantity(tempCartItem)" class="btn btn-primary btn-sm">
-                                          <i class="fas fa-minus"></i>
+                                      <button id="combo" aria-label="Aria Name" (click)="decrementQuantity(tempCartItem)" class="btn btn-primary btn-sm" >
+                                          <i class="fa fa-minus"></i>
                                       </button>
                                   </div>
 
