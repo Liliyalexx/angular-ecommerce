@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 import { MedShoppingFormService } from 'src/app/services/med-shopping-form.service';
 
 @Component({
@@ -17,8 +19,11 @@ export class CheckoutComponent implements OnInit {
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
 
-  billingAddressStates: any;
-  shippingAddressStates: any;
+  billingAddressStates: State[]=[];
+  shippingAddressStates: State[]=[];
+
+  countries: Country[]=[];
+  states: State[] = [];
 
 
 
@@ -55,7 +60,21 @@ export class CheckoutComponent implements OnInit {
         expirationMonth: [''],
         expirationYear: ['']
       })
-    });
+
+
+    }
+    );
+
+    //populate states
+
+
+
+    // this.medShoppingFormService.getStates().subscribe(
+    //   (      data: State[]) => {
+    //     console.log("Retrieved states: " + JSON.stringify(data));
+    //     this.states = data;
+    //   }
+    // )
 
     //populate credit card months
     const startMonth: number = new Date().getMonth()+1;
@@ -77,6 +96,16 @@ export class CheckoutComponent implements OnInit {
       this.creditCardYears = data;
     }
   );
+   //populate countries
+
+   this.medShoppingFormService.getCountries().subscribe(
+    (        data: Country[]) => {
+      console.log("Retrieved countries: " + JSON.stringify(data)
+      );
+      this.countries = data;
+    }
+  );
+
   }
 
   copyShippingAddressToBillingAddress(event: Event) {

@@ -46,15 +46,17 @@
         <h3>Shipping Address</h3>
 
         <div class="row">
-            <div class="col-md-2"> <label>Country</label></div>
-            <div class="col-md-9">
-                <div class="input-space">
-                    <select formControlName="country" aria-label="Search">
-                        <option>TO DO</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+          <div class="col-md-2"> <label>Country</label></div>
+          <div class="col-md-9">
+              <div class="input-space">
+                  <select formControlName="country"  aria-label="Search">
+                      <option *ngFor="let country of countries" [ngValue]="country">
+                        {{ country.name }}
+                      </option>
+                  </select>
+              </div>
+          </div>
+          </div>
 
         <div class="row">
             <div class="col-md-2"> <label>Street</label></div>
@@ -109,18 +111,6 @@
     <!-- Billing Address -->
     <div formGroupName="billingAddress" class="form-area">
         <h3>Billing Address</h3>
-
-        <div class="row">
-            <div class="col-md-2"> <label>Country</label></div>
-            <div class="col-md-9">
-                <div class="input-space">
-                    <select formControlName="country" aria-label="Search">
-                        <option>TO DO</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-md-2"> <label>Street</label></div>
             <div class="col-md-9">
@@ -131,24 +121,27 @@
         </div>
 
         <div class="row">
-            <div class="col-md-2"> <label>City</label></div>
-            <div class="col-md-9">
-                <div class="input-space">
-                    <input formControlName="city" type="text" aria-label="Search">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
+          <div class="col-md-2"> <label>Country</label></div>
+          <div class="col-md-9">
+              <div class="input-space">
+                  <select formControlName="country"  aria-label="Search">
+                      <option *ngFor="let country of countries" [ngValue]="country">
+                        {{ country.name }}
+                      </option>
+                  </select>
+              </div>
+          </div>
+          </div>
+          <div class="row">
             <div class="col-md-2"> <label>State</label></div>
-            <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName="state" aria-label="Search">
-                        <option>TO DO</option>
+                        <option *ngFor="let state of states" [ngValue]="state">
+                          {{ state.name }}
+                        </option>
                     </select>
                 </div>
             </div>
-        </div>
 
         <div class="row">
             <div class="col-md-2"> <label>Zip Code</label></div>
@@ -231,6 +224,8 @@
         </div>
 
     </div>
+
+
 
     <!-- Order Details -->
 
