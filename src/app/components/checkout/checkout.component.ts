@@ -4,6 +4,7 @@ import { MedShoppingFormService } from 'src/app/services/med-shopping-form.servi
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
 import { MedShopValidators } from 'src/app/validators/med-shop-validators';
+import { CartService } from 'src/app/services/cart.service';
 
 
 @Component({
@@ -28,10 +29,13 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private medShoppingFormService: MedShoppingFormService
-  ) {}
+    private medShoppingFormService: MedShoppingFormService,
+    private cartService: CartService) {}
+
 
   ngOnInit(): void {
+
+    this.reviewCartDetails();
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -107,6 +111,20 @@ export class CheckoutComponent implements OnInit {
       console.log('Retrieved countries: ' + JSON.stringify(data));
       this.countries = data;
     });
+  }
+  reviewCartDetails() {
+
+    //subscribe to cartService.totalQuantity
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+
+
+    //subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    );
+
   }
 
   get firstName() {return this.checkoutFormGroup.get('customer.firstName'); }
