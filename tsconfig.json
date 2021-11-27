@@ -1,0 +1,18 @@
+{
+  "files": [],
+  // "module": "es2017",
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    },
+    // tsconfig.json
+
+  ],
+  "compilerOptions": {
+    "module": "commonjs"
+  }
+
+}
